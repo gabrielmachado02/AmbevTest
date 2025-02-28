@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ambev.Sales.Application\Ambev.Sales.Application.csproj" />
+    <ProjectReference Include="..\Ambev.Sales.Domain\Ambev.Sales.Domain.csproj" />
     <ProjectReference Include="..\Ambev.Sales.IoC\Ambev.Sales.IoC.csproj" />
   </ItemGroup>
 

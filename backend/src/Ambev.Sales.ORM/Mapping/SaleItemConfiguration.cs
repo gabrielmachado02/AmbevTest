@@ -22,9 +22,15 @@ namespace Ambev.Sales.ORM.Mapping
                 .HasColumnType("decimal(18,2)")
                 .IsRequired();
 
+
+
             builder.Property(si => si.Discount)
                 .HasColumnType("decimal(18,2)")
                 .IsRequired();
+
+            builder.Property(u => u.ItemStatus)
+         .HasConversion<string>()
+         .HasMaxLength(20);
 
             builder.Property(si => si.TotalValue)
                 .HasColumnType("decimal(18,2)")

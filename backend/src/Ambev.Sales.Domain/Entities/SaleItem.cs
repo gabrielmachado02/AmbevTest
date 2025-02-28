@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ambev.Sales.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,27 +9,39 @@ namespace Ambev.Sales.Domain.Entities
 {
     public class SaleItem
     {
-        public Guid Id { get; private set; }
-        public Guid SaleId { get; private set; }
-        public Guid ProductId { get; private set; }
-        public int Quantity { get; private set; }
-        public decimal UnitPrice { get; private set; }
-        public decimal Discount { get; private set; }
-        public decimal TotalValue { get; private set; }
+        public Guid Id { get;  set; }
+        public Guid SaleId { get;  set; }
+        public Guid ProductId { get;  set; }
+        public string Name { get; set; }
+        public string Description  { get; set; }
 
-        protected SaleItem() { } // Constructor for EF
+        public int Quantity { get;  set; }
+        public decimal UnitPrice { get;  set; }
+        public decimal Discount { get;  set; }
+        public ItemStatus ItemStatus { get; set; }
+        public decimal TotalValue { get;  set; }
 
-        public SaleItem(Guid saleId, Guid productId, int quantity, decimal unitPrice, decimal discount)
+        public SaleItem() { } // Constructor for EF
+
+        public SaleItem(string name ,string description, Guid saleId, Guid productId, int quantity, decimal unitPrice)
         {
+            Name = name;
+            Description = description;
+            ItemStatus = ItemStatus.Active;
             Id = Guid.NewGuid();
             SaleId = saleId;
             ProductId = productId;
             Quantity = quantity;
             UnitPrice = unitPrice;
-            Discount = discount;
             CalculateTotalValue();
         }
+        public void Cancel()
+        {
+            if (ItemStatus == ItemStatus.Cancelled)
+                throw new InvalidOperationException($"O item {Id} já está cancelado.");
 
+            ItemStatus = ItemStatus.Cancelled;
+        }
         private void CalculateTotalValue()
         {
             TotalValue = (UnitPrice * Quantity) - Discount;

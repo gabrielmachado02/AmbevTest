@@ -9,6 +9,8 @@ namespace Ambev.Sales.WebApi.Features.Sale.CreateSalesFeature;
 /// </summary>
 public sealed class CreateSaleResponse
 {
+    public Guid Id { get; private set; }
+
     public string SaleNumber { get; private set; }
 
     public DateTime SaleDate { get; private set; }
@@ -21,5 +23,5 @@ public sealed class CreateSaleResponse
 
     public SaleStatus Status { get; private set; }
 
-    public List<SaleItem> Items { get; private set; }
+    public List<Domain.Entities.SaleItem> Items { get; private set; }
 }

@@ -17,9 +17,11 @@ namespace Ambev.Sales.ORM.Mapping
             builder.Property(u => u.Id).HasColumnType("uuid").HasDefaultValueSql("gen_random_uuid()");
 
 
-            builder.Property(s => s.SaleNumber).IsRequired()
-                .IsRequired()
-                .HasMaxLength(100);
+            builder.Property(s => s.SaleNumber)
+            
+               .HasDefaultValueSql("LPAD((FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000 + RANDOM() * 999)::BIGINT)::TEXT, 9, '0')");
+
+            builder.HasIndex(s => s.SaleNumber).IsUnique();
 
             builder.Property(s => s.SaleDate)
                 .IsRequired();

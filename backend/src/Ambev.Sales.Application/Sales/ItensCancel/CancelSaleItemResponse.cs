@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ambev.Sales.ORM.Repositories
+namespace Ambev.Sales.Application.Sales.ItensCancel
 {
-    internal class SaleItemRepository
+    public class CancelSaleItemResponse
     {
+        public bool Sucess { get; set; }
     }
 }
