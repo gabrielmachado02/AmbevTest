@@ -6,8 +6,9 @@ namespace Ambev.Sales.WebApi.Features.Sale.CreateSalesFeature
     {
         public CreateSaleRequestValidator()
         {
-            RuleFor(user => user.CartKey).NotEmpty();
-
+            RuleForEach(x => x.Items)
+                        .Must(item => item.Quantity <= 20)
+                        .WithMessage(item => $" No item can have more than 20 units");
 
         }
     }

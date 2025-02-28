@@ -9,12 +9,13 @@ using Ambev.DeveloperEvaluation.WebApi.Middleware;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using StackExchange.Redis;
 
 namespace Ambev.DeveloperEvaluation.WebApi;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         try
         {
@@ -41,6 +42,14 @@ public class Program
             builder.RegisterDependencies();
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly, typeof(ApplicationLayer).Assembly);
+            var redisConnectionString = builder.Configuration.GetConnectionString("Redis");
+
+
+
+            builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+            {
+                return ConnectionMultiplexer.Connect(redisConnectionString);
+            });
 
             builder.Services.AddMediatR(cfg =>
             {
@@ -60,7 +69,22 @@ public class Program
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var logger = services.GetRequiredService<ILogger<Program>>();
 
+                try
+                {
+                    logger.LogInformation("? Iniciando DatabaseSeeder...");
+                    await RedisSeeder.SeedAsync(services);
+                    logger.LogInformation("? DatabaseSeeder concluído!");
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "?? Falha ao executar o DatabaseSeeder.");
+                }
+            }
             app.UseHttpsRedirection();
 
             app.UseAuthentication();

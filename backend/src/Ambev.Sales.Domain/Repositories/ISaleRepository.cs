@@ -41,5 +41,11 @@ namespace Ambev.Sales.Domain.Repositories
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>True if the sale was deleted, false if not found</returns>
         Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+
+        Task<List<Sale>> GetByIdListAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+
+        Task UpdateRangeAsync(List<Sale> sales, CancellationToken cancellationToken);
+
+        Task<Sale> UpdateAsync(Sale sale, CancellationToken cancellationToken = default);
     }
 }

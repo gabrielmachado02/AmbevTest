@@ -15,24 +15,22 @@ using IDatabase = StackExchange.Redis.IDatabase;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSales
 {
-    internal class CreateSaleCommandHandle : IRequestHandler<CreateSaleCommand, CreateSaleCommandResult>
+    public class CreateSaleCommandHandle : IRequestHandler<CreateSaleCommand, CreateSaleResult>
     {
         private readonly ISaleRepository _saleRepository;
         private readonly IMapper _mapper;
-        private readonly IDatabase _redis;  
         /// <summary>
         /// Initializes a new instance of CreateUserHandler
         /// </summary>
         /// <param name="userRepository">The user repository</param>
         /// <param name="mapper">The AutoMapper instance</param>
         /// <param name="validator">The validator for CreateUserCommand</param>
-        public CreateSaleCommandHandle(IConnectionMultiplexer redis,ISaleRepository userRepository, IMapper mapper)
+        public CreateSaleCommandHandle(ISaleRepository userRepository, IMapper mapper)
         {
             _saleRepository = userRepository;
             _mapper = mapper;
         }
 
-        public StackExchange.Redis.IDatabase Redis => _redis;
 
         /// <summary>
         /// Handles the CreateUserCommand request
@@ -40,33 +38,29 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSales
         /// <param name="command">The CreateUser command</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>The created user details</returns>
-        public async Task<CreateSaleCommandResult> Handle(CreateSaleCommand command, CancellationToken cancellationToken)
+        public async Task<CreateSaleResult> Handle(CreateSaleCommand command, CancellationToken cancellationToken)
         {
-            var cartData = await Redis.StringGetAsync(command.CartKey.ToString());
 
-            if (cartData.IsNullOrEmpty) throw new Exception("Cart  not found.");
+            var sale = new Sale(
+              DateTime.Now.ToUniversalTime(),
+              command.CustomerId,
+              command.BranchId
+          );
 
-
-         
-            var sale = JsonConvert.DeserializeObject<Sale>(cartData);
-
-
-            foreach (var item in sale.Items)
+            foreach (var item in command.Items.ToList())
             {
-                sale.AddItem(item.ProductId, item.Quantity, item.UnitPrice, item.Discount);
+                sale.AddItem(item.Name, item.Description, item.ProductId, item.Quantity, item.UnitPrice);
             }
+
             var validator = new CreateSaleCommandValidator();
-         
+
             var validationResult = await validator.ValidateAsync(command, cancellationToken);
 
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
 
-
-
-
-            var createdUser = await _saleRepository.CreateAsync(sale, cancellationToken);
-            var result = _mapper.Map<CreateSaleCommandResult>(createdUser);
+            var createSale = await _saleRepository.CreateAsync(sale, cancellationToken);
+            var result = _mapper.Map<CreateSaleResult>(createSale);
             return result;
         }
     }

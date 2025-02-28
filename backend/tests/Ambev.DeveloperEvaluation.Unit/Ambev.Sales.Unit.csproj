@@ -39,8 +39,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Application\TestData\" />
-	  <Folder Include="Domain\Entities\TestData\" />
 	  <Folder Include="Domain\Specifications\TestData\" />
 	  <Folder Include="Domain\Validation\" />
 	</ItemGroup>

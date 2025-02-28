@@ -26,6 +26,13 @@ namespace Ambev.Sales.ORM.Repositories
             return sale;
         }
 
+        public async Task<Sale> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)
+        {
+            _context.Sales.Update(sale);
+            await _context.SaveChangesAsync(cancellationToken);
+            return sale;
+        }
+
         public Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -33,9 +40,21 @@ namespace Ambev.Sales.ORM.Repositories
 
         public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _context.Sales.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+            return await _context.Sales.Include(c=>c.Items).FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
         }
 
+        public async Task<List<Sale>> GetByIdListAsync(List<Guid> ids, CancellationToken cancellationToken = default)
+        {
+           return await _context.Sales
+            .Where(s => ids.Contains(s.Id)) 
+            .Include(s => s.Items) 
+            .ToListAsync(cancellationToken);
+        }
+        public async Task UpdateRangeAsync(List<Sale> sales, CancellationToken cancellationToken)
+        {
+            _context.Sales.UpdateRange(sales);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
         public async Task<Sale?> GetSaleByUserId(Guid userId, CancellationToken cancellationToken = default)
         {
             return await _context.Sales.FirstOrDefaultAsync(o => o.Id == userId, cancellationToken);

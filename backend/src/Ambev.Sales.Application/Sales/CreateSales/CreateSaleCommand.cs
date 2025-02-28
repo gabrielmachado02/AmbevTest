@@ -10,20 +10,17 @@ using System.Threading.Tasks;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSales
 {
-    public class CreateSaleCommand : IRequest<CreateSaleCommandResult>
+    public class CreateSaleCommand : IRequest<CreateSaleResult>
     {
-        public Guid CartKey { get; private set; }
 
-        public string SaleNumber { get; private set; }
 
-        public DateTime SaleDate { get; private set; }
+        public Guid CustomerId { get;  set; }
 
-        public Guid CustomerId { get; private set; }
-        public Guid DivisionId { get; private set; }
 
-        public SaleStatus Status { get; private set; }
 
-        public List<SaleItem> Items { get; private set; }
+        public Guid BranchId { get;  set; }
+
+        public List<SaleItem> Items { get; set; }
 
         public ValidationResultDetail Validate()
         {

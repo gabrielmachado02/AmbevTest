@@ -8,6 +8,14 @@ namespace Ambev.Sales.WebApi.Features.Sale.CreateSalesFeature;
 /// </summary>
 public class CreateSaleRequest
 {
-    public string CartKey { get; private set; }
+    /// <summary>
+    /// Gets or sets the password. Must meet security requirements.
+    /// </summary>
+
+    public Guid CustomerId { get;  set; }
+
+    public Guid DivisionId { get; set; }
+
+    public List<Domain.Entities.SaleItem> Items { get; set; }
 
 }

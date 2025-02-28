@@ -10,7 +10,7 @@ namespace Ambev.Sales.Domain.Enums
     {
 
         Cancelled = 0,
-        pending ,
+        Pending ,
         Approved,
 
     }
