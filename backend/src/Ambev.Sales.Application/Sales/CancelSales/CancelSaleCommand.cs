@@ -15,7 +15,7 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSales
     {
 
 
-        public List<Guid> SalesIds { get; private set; }
+        public List<Guid> SalesIds { get;  set; }
 
 
         public ValidationResultDetail Validate()

@@ -7,7 +7,7 @@ namespace Ambev.Sales.WebApi.Features.Sale.CreateSalesFeature;
 /// <summary>
 /// Represents the response returned after user authentication
 /// </summary>
-public sealed class ModifiedSaleResponse
+public sealed class ModifySaleResponse
 {
     public Guid Id { get; private set; }
 

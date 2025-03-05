@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IDatabase = StackExchange.Redis.IDatabase;
 
-namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSales
+namespace Ambev.Sales.Application.ModifySales
 {
     public class ModifySaleCommandHandle : IRequestHandler<ModifySaleCommand, ModifySaleResult>
     {

@@ -9,22 +9,22 @@ namespace Ambev.Sales.Domain.Entities
 {
     public class Sale
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get;  set; }
 
-        public string SaleNumber { get; private set; } = GenerateSaleNumber();
+        public string SaleNumber { get;  set; } = GenerateSaleNumber();
 
-        public DateTime SaleDate { get; private set; }
+        public DateTime SaleDate { get;  set; }
 
-        public Guid CustomerId { get; private set; }
+        public Guid CustomerId { get;  set; }
 
-        public decimal TotalValue { get; private set; }
-        public decimal Discount { get; private set; }
+        public decimal TotalValue { get;  set; }
+        public decimal Discount { get;  set; }
 
-        public Guid DivisionId { get; private set; }
+        public Guid DivisionId { get;  set; }
 
-        public SaleStatus Status { get; private set; }
+        public SaleStatus Status { get;  set; }
 
-        public List<SaleItem> Items { get; private set; }
+        public List<SaleItem> Items { get;  set; }
 
         public Sale()
         {

@@ -45,7 +45,7 @@ namespace Ambev.Sales.Application.Sales.ItensCancel
             var sale = await _saleRepository.GetByIdAsync(command.SaleId, cancellationToken);
             if (sale == null) return false;
 
-            var itemsToRemove = sale.Items.Where(i => command.saleItemIds.Contains(i.Id)).ToList();
+            var itemsToRemove = sale.Items.Where(i => command.SaleItemIds.Contains(i.Id)).ToList();
             return itemsToRemove.Any();
         }
     }

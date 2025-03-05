@@ -1,12 +1,12 @@
 ﻿using Ambev.Sales.Domain.Entities;
 using Ambev.Sales.Domain.Enums;
 
-namespace Ambev.Sales.WebApi.Features.Sale.CreateSalesFeature;
+namespace Ambev.Sales.WebApi.Features.Sale.ModifySaleFeature;
 
 /// <summary>
 /// Represents the authentication request model for user login.
 /// </summary>
-public class ModifiedSaleRequest
+public class ModifySaleRequest
 {
     /// <summary>
     /// Gets or sets the password. Must meet security requirements.

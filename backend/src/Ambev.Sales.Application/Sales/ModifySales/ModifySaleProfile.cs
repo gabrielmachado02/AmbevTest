@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ambev.Sales.Application.Sales.CreateSales
+namespace Ambev.Sales.Application.ModifySales
 {
     public class ModifySaleProfile : Profile
     {
