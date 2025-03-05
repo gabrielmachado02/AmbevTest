@@ -7,6 +7,8 @@ using Ambev.DeveloperEvaluation.Application.Sales.CreateSales;
 using Ambev.Sales.Application.Sales.CreateSales;
 using Ambev.Sales.WebApi.Features.SaleItem.CancelSaleItem;
 using Ambev.Sales.Application.Sales.ItensCancel;
+using Ambev.Sales.Application.ModifySales;
+using Ambev.Sales.WebApi.Features.Sale.ModifySaleFeature;
 
 namespace Ambev.Sales.WebApi.Features.Sale
 {
@@ -59,12 +61,12 @@ namespace Ambev.Sales.WebApi.Features.Sale
         /// Modifies a sale
         /// </summary>
         [HttpPut("modify")]
-        [ProducesResponseType(typeof(ApiResponseWithData<ModifiedSaleResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponseWithData<ModifySaleResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> ModifySale([FromBody] ModifiedSaleRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> ModifySale([FromBody] ModifySaleRequest request, CancellationToken cancellationToken)
         {
-            var validator = new ModifiedSaleRequestValidator();
+            var validator = new ModifySaleRequestValidator();
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (!validationResult.IsValid)
@@ -73,11 +75,11 @@ namespace Ambev.Sales.WebApi.Features.Sale
             var command = _mapper.Map<ModifySaleCommand>(request);
             var response = await _mediator.Send(command, cancellationToken);
 
-            return Ok(new ApiResponseWithData<ModifiedSaleResponse>
+            return Ok(new ApiResponseWithData<ModifySaleResponse>
             {
                 Success = true,
                 Message = "Sale modified successfully",
-                Data = _mapper.Map<ModifiedSaleResponse>(response)
+                Data = _mapper.Map<ModifySaleResponse>(response)
             });
         }
 

@@ -11,8 +11,7 @@ namespace Ambev.Sales.WebApi.Features.SaleItem.CancelSaleItem
         /// </summary>
         public CancelSaleItemProfile()
         {
-            CreateMap<ItensCancelRequest, ModifySaleCommand>();
-            CreateMap<ModifySaleResult, CreateSaleResponse>();
+            CreateMap<ItensCancelRequest, CancelSaleCommand>();
         }
     }
 }

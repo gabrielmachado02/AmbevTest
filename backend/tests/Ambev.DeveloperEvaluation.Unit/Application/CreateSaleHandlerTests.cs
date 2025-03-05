@@ -24,7 +24,7 @@ public class CreateSaleCommandHandleTests
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
-    private readonly  CreateSaleCommandHandle _handler;
+    private readonly CreateSaleCommandHandle _handler;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateSaleCommandHandleTests"/> class.
@@ -52,6 +52,8 @@ public class CreateSaleCommandHandleTests
 
         _mapper.Map<Sale>(command).Returns(sale);
         _mapper.Map<CreateSaleResult>(sale).Returns(result);
+
+
         _saleRepository.CreateAsync(Arg.Any<Sale>(), Arg.Any<CancellationToken>()).Returns(sale);
 
         // When
@@ -65,5 +67,5 @@ public class CreateSaleCommandHandleTests
 
     /// <summary>
     /// Tests that an invalid sale creation request throws a validation exception.
- 
+
 }

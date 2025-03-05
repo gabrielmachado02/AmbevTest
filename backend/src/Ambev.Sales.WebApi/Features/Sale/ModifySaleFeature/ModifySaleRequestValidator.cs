@@ -1,10 +1,11 @@
-﻿using FluentValidation;
+﻿using Ambev.Sales.WebApi.Features.Sale.ModifySaleFeature;
+using FluentValidation;
 
 namespace Ambev.Sales.WebApi.Features.Sale.CreateSalesFeature
 {
-    public class ModifiedSaleRequestValidator : AbstractValidator<ModifiedSaleRequest>
+    public class ModifySaleRequestValidator : AbstractValidator<ModifySaleRequest>
     {
-        public ModifiedSaleRequestValidator()
+        public ModifySaleRequestValidator()
         {
             RuleForEach(x => x.Items)
                         .Must(item => item.Quantity <= 20)
